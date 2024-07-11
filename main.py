@@ -25,6 +25,10 @@ search = browser.find_element(By.ID, "searchInput")
 request = input("Введите запрос для поиска на Википедии: ")
 
 search.send_keys(request)
+search.send_keys(Keys.ENTER)
+
+time.sleep(5)
+
 
 def list_paragraphs():
     paragraphs = browser.find_elements(By.TAG_NAME, "p")
@@ -37,12 +41,14 @@ def get_related_pages():
     related_pages = browser.find_elements(By.CLASS_NAME, "mbox-text")
     for index, page in enumerate(related_pages):
         print(f"{index + 1}. {page.text}")
+        return related_pages
 
 
 def get_internal_links():
     internal_links = browser.find_elements(By.CSS_SELECTOR, "a[href^='/wiki/']")
     for index, link in enumerate(internal_links):
         print(f"{index + 1}. {link.text}")
+        return internal_links
 
 
 def main():
@@ -52,6 +58,7 @@ def main():
         print("2. Перейти на одну из связанных страниц")
         print("3. Выйти из программы")
         choice = input("Введите номер действия: ")
+
 
         if choice == "1":
             list_paragraphs()
