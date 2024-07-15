@@ -27,7 +27,7 @@ request = input("Введите запрос для поиска на Викип
 search.send_keys(request)
 search.send_keys(Keys.ENTER)
 
-time.sleep(5)
+time.sleep(2)
 
 
 def list_paragraphs():
@@ -65,8 +65,10 @@ def main():
         if choice == "1":
             list_paragraphs()
         elif choice == "2":
-            for _ in get_related_pages():
-                pass
+            related_pages = get_related_pages()
+            if not related_pages:
+                print("Нет связанных страниц. Попробуйте снова.")
+                continue
             selected_page = int(input("Выберите ссылку для перехода: "))
             related_pages[selected_page - 1].click()
             time.sleep(3)
@@ -77,16 +79,23 @@ def main():
             if inner_choice == "1":
                 list_paragraphs()
             elif inner_choice == "2":
-                for _ in  get_internal_links():
-                    pass
+                internal_links = get_internal_links()
+                if not internal_links:
+                    print("Нет внутренних ссылок.")
+                    continue
                 selected_link = int(input("Выберите ссылку для перехода: "))
-                internal_links[selected_link - 1].click()
+                if 1 <= selected_link <= len(internal_links):
+                   internal_links[selected_link - 1].click()
+                   time.sleep(3)
+                else:
+                 print("Неверный номер ссылки. Попробуйте снова.")
+            else:
+                print("Неверный номер страницы. Попробуйте снова.")
 
-                time.sleep(3)
         elif choice == "3":
             break
         else:
-            print("Неверный выбор. Попробуйте снова.")
+         print("Неверный выбор. Попробуйте снова.")
 
 
 if __name__ == "__main__":
