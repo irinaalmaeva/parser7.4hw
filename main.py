@@ -42,7 +42,7 @@ def get_related_pages():
     related_pages = browser.find_elements(By.CLASS_NAME, "mbox-text")
     for index, page in enumerate(related_pages):
         print(f"{index + 1}. {page.text}")
-        yield related_pages
+    return related_pages
 
 
 def get_internal_links():
@@ -50,7 +50,7 @@ def get_internal_links():
     internal_links = browser.find_elements(By.CSS_SELECTOR, "a[href^='/wiki/']")
     for index, link in enumerate(internal_links):
         print(f"{index + 1}. {link.text}")
-        yield internal_links
+    return internal_links
 
 
 def main():
